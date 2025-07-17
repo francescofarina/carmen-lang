@@ -7,7 +7,7 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 authors = ["Francesco Farina"]
 readme = "README.md"
-repository = "https://github.com/francescofarina/carmen"
+repository = "https://github.com/francescofarina/carmen-lang"
 
 [[bin]]
 name = "carmen"
