@@ -1,0 +1,21 @@
+# Cargo.toml
+[package]
+name = "carmen-lang"
+description = "A programming language for music composition"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["Francesco Farina"]
+readme = "README.md"
+repository = "https://github.com/francescofarina/carmen"
+
+[[bin]]
+name = "carmen"
+path = "src/main.rs"
+
+[lib]
+name = "carmen_lang"
+path = "src/lib.rs"
+
+[dependencies]
+rustyline = "16.0.0"

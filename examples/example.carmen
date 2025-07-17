@@ -1,0 +1,49 @@
+let voice_1 = [
+    1/12 [~, g4, a, b, d5, c, c, e, d, d, g, fs, g, d, b4, g, a, b, c5, d, e, d, c, b4, a, b, g],
+    1/12 [fs4, g],
+    3/12 a4,
+    1/12 [g4, c5, b4, a],
+];
+let voice_2 = [
+    1/12 [~, b3, d4],
+    1/4 [d4, e, g, e, b3, a, d4],
+    1/2 c4,
+    1/4 [a3, fs4]
+];
+let voice_3 = [
+    1/4 ~,
+    2/12 g4, 1/12 fs4, 2/12 g4, 1/12 a4, 2/12 b4, 1/12 a4, 2/12 b4, 1/12 g4, 2/12 e4, 1/12 d4,
+    2/12 e4, 1/12 fs4, 2/12 g4, 1/12 d4, 2/12 e4, 1/12 b3, 2/12 a3, 1/12 d4,
+    1/12 [d4, fs4], 3/12 a4, 1/12 fs4,
+];
+let voice_4 = [
+    1/4 [g2, g3, e, b2, e3, e2, a, b, c3, d, fs, d]
+];
+
+score "BVW 147" {
+    @composer "J S Bach";
+    @title "BVW 147";
+    @key_signature "G";
+    @time_signature 3/4;
+
+    @tempo 100;
+
+    timeline {
+        part "Violin" {
+            @clef "treble";
+            voice_1;
+        };
+        part "Violin 2" {
+            @clef "treble";
+            voice_2;
+        };
+        part "Viola" {
+            @clef "alto";
+            voice_3;
+        };
+        part "Cello" {
+            @clef "bass";
+            voice_4;
+        };
+    };
+};
