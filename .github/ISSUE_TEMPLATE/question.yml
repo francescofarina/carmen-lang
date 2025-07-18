@@ -1,0 +1,161 @@
+name: ❓ Question / Help
+description: Ask a question or get help using Carmen
+title: "question: "
+labels: ["question", "help-wanted"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reaching out! We're here to help you with Carmen. Please provide as much detail as possible so we can give you the best assistance.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know about Carmen?
+      placeholder: |
+        I'm trying to understand how to...
+        OR
+        I'm having trouble with...
+        OR
+        What's the best way to...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic Area
+      description: What area is your question about?
+      options:
+        - "Getting Started / Installation"
+        - "Basic Syntax / Language Features"
+        - "Music Theory / Transformations"
+        - "Multi-staff / Complex Compositions"
+        - "Export / Output Formats"
+        - "REPL / Interactive Mode"
+        - "Performance / Optimization"
+        - "Contributing / Development"
+        - "Integration with Other Tools"
+        - "Best Practices / Patterns"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: |
+        Provide context about what you're trying to accomplish.
+        What's your musical/programming background? What's your end goal?
+      placeholder: |
+        I'm a composer trying to...
+        OR
+        I'm a programmer learning music composition and...
+        OR
+        I'm working on a project that needs to...
+
+  - type: textarea
+    id: attempted-code
+    attributes:
+      label: What You've Tried
+      description: |
+        If applicable, show us the Carmen code you've tried or what you've attempted so far.
+        This helps us understand your current approach.
+      render: rust
+      placeholder: |
+        // What I've tried:
+        let melody = 1/4 [c4, d4, e4];
+
+        // But I want to achieve:
+        // (describe what you want to happen)
+
+  - type: textarea
+    id: expected-outcome
+    attributes:
+      label: Desired Outcome
+      description: What are you hoping to achieve? What should the result look/sound like?
+      placeholder: |
+        I want to create...
+        OR
+        The output should be...
+        OR
+        I expect this to generate...
+
+  - type: textarea
+    id: research-done
+    attributes:
+      label: Research Done
+      description: |
+        What have you already looked at? This helps us avoid repeating information.
+      placeholder: |
+        I've checked:
+        - [ ] README.md
+        - [ ] Language Manual (docs/language_manual.md)
+        - [ ] Examples directory
+        - [ ] Existing GitHub issues
+        - [ ] API documentation (docs.rs)
+        - [ ] Other: ...
+
+  - type: input
+    id: carmen-version
+    attributes:
+      label: Carmen Version
+      description: What version of Carmen are you using?
+      placeholder: "0.1.0 (or 'built from source')"
+
+  - type: input
+    id: operating-system
+    attributes:
+      label: Operating System
+      description: What OS are you using?
+      placeholder: "macOS 14.0, Ubuntu 22.04, Windows 11, etc."
+
+  - type: checkboxes
+    id: urgency
+    attributes:
+      label: Urgency
+      description: How urgent is this question?
+      options:
+        - label: "Not urgent - just curious"
+        - label: "Somewhat urgent - working on a project"
+        - label: "Urgent - blocked on this issue"
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: |
+        Any other details that might be helpful:
+        - Error messages you're seeing
+        - Links to relevant musical concepts
+        - Screenshots of output
+        - Related tools you're using (LilyPond, DAW, etc.)
+      placeholder: |
+        Additional context...
+
+  - type: checkboxes
+    id: follow-up
+    attributes:
+      label: Follow-up
+      description: How would you prefer to receive help?
+      options:
+        - label: "I'm happy with help in this GitHub issue"
+        - label: "I'd be interested in contributing documentation about this topic after I understand it"
+        - label: "I'd like to help others with similar questions in the future"
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following before submitting
+      options:
+        - label: "I have searched existing issues and discussions for similar questions"
+          required: true
+        - label: "I have provided context about what I'm trying to accomplish"
+          required: true
+        - label: "I understand this is a community project and responses may take time"
+          required: true
