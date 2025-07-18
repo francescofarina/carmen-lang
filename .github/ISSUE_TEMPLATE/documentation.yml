@@ -1,0 +1,164 @@
+name: 📚 Documentation Issue
+description: Report issues with documentation or request documentation improvements
+title: "docs: "
+labels: ["documentation", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Carmen's documentation! Clear documentation is essential for a programming language.
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation issue is this?
+      options:
+        - "Language Manual (syntax, features)"
+        - "API Documentation (code comments, docs.rs)"
+        - "README (project overview, quick start)"
+        - "Contributing Guidelines"
+        - "Examples (code samples, tutorials)"
+        - "Installation Instructions"
+        - "Export/Output Documentation"
+        - "REPL/CLI Documentation"
+        - "Code Comments (inline documentation)"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-category
+    attributes:
+      label: Issue Category
+      description: What kind of documentation issue is this?
+      options:
+        - "Missing Documentation (feature exists but undocumented)"
+        - "Incorrect Information (documentation is wrong)"
+        - "Unclear/Confusing (documentation exists but unclear)"
+        - "Outdated Information (documentation is outdated)"
+        - "Broken Links/References"
+        - "Formatting/Presentation Issues"
+        - "Spelling/Grammar Errors"
+        - "Missing Examples"
+        - "Improvement Suggestion"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description
+      description: Describe the documentation issue clearly and concisely.
+      placeholder: |
+        The documentation for... is unclear because...
+        OR
+        The feature... is not documented anywhere...
+        OR
+        The example in... produces an error...
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Documentation Location
+      description: Where is the problematic documentation located?
+      placeholder: "docs/language_manual.md, README.md section 'Usage', API docs for Parser::new(), etc."
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-content
+    attributes:
+      label: Current Content
+      description: |
+        If applicable, quote the current documentation that is problematic.
+        Use markdown formatting to make it clear.
+      placeholder: |
+        Current documentation says:
+        ```
+        To export to LilyPond, use: carmen --export file.ly
+        ```
+
+        But this is missing the input file parameter.
+
+  - type: textarea
+    id: expected-content
+    attributes:
+      label: Expected/Suggested Content
+      description: |
+        What should the documentation say instead?
+        Provide your suggested improvement or the information you expected to find.
+      placeholder: |
+        Should be:
+        ```
+        To export to LilyPond, use: carmen --export lilypond input.carmen output.ly
+        ```
+
+        Or explain that the syntax is: carmen --export <format> <input> <output>
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case/Context
+      description: |
+        Describe the situation where you encountered this documentation issue.
+        What were you trying to accomplish?
+      placeholder: |
+        I was trying to...
+        As a new user, I expected to find information about...
+        While working on..., I couldn't understand how to...
+
+  - type: textarea
+    id: examples-needed
+    attributes:
+      label: Examples Needed
+      description: |
+        If this is about missing examples, what specific examples would be helpful?
+        What musical scenarios should be demonstrated?
+      placeholder: |
+        Examples that would help:
+        - How to write a simple melody with dynamics
+        - Multi-staff piano composition
+        - Using loops to generate patterns
+        - Applying music theory transformations
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: |
+        Any other context that might be helpful:
+        - Links to related issues
+        - Screenshots (for formatting issues)
+        - Similar documentation in other projects
+        - Specific sections that work well as reference
+      placeholder: |
+        Additional information...
+
+  - type: checkboxes
+    id: volunteer
+    attributes:
+      label: Contribution
+      description: Are you interested in helping fix this documentation issue?
+      options:
+        - label: "I'd like to help write/improve this documentation"
+        - label: "I can provide technical review for proposed changes"
+        - label: "I can test documentation changes from a user perspective"
+        - label: "I'm just reporting the issue (no contribution planned)"
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following before submitting
+      options:
+        - label: "I have searched existing issues to ensure this hasn't been reported before"
+          required: true
+        - label: "I have provided specific location information for the problematic documentation"
+          required: true
+        - label: "I have described what the documentation should contain or how it should be improved"
+          required: true

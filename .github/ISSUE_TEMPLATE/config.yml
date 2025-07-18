@@ -1,0 +1,17 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 🎵 Carmen Documentation
+    url: https://github.com/francescofarina/carmen/blob/main/docs/language_manual.md
+    about: Read the complete language manual and documentation
+  - name: 📖 API Documentation
+    url: https://docs.rs/carmen-lang
+    about: Browse the API documentation on docs.rs
+  - name: 💡 Examples & Tutorials
+    url: https://github.com/francescofarina/carmen/tree/main/examples
+    about: Check out Carmen code examples and tutorials
+  - name: 🚀 Getting Started
+    url: https://github.com/francescofarina/carmen#carmen-language-quick-start
+    about: Quick start guide for new users
+  - name: 🤝 Contributing Guide
+    url: https://github.com/francescofarina/carmen/blob/main/CONTRIBUTING.md
+    about: Learn how to contribute to Carmen development

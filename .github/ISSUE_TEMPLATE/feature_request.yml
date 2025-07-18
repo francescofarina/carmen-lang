@@ -1,0 +1,183 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement for Carmen
+title: "feat: "
+labels: ["enhancement", "needs-discussion"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide detailed information to help us understand and evaluate your request.
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Feature Description
+      description: A clear and concise description of the feature you'd like to see.
+      placeholder: I would like Carmen to support...
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation and Use Case
+      description: |
+        Explain why this feature would be useful. What problem does it solve?
+        What musical or compositional scenarios would benefit from this feature?
+      placeholder: |
+        This feature would help composers to...
+
+        Example scenarios:
+        - Contemporary classical music that uses...
+        - Electronic music producers who need...
+        - Music theorists analyzing...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-syntax
+    attributes:
+      label: Proposed Syntax/API
+      description: |
+        If you have ideas about how this feature should work in Carmen, please provide examples.
+        Don't worry if you're not sure about the exact syntax - rough ideas are helpful too!
+      render: rust
+      placeholder: |
+        // Example of how this feature might work:
+        @tuning "quarter_tone";
+        1/4 c4+50; // 50 cents sharp
+
+        // Or using a function:
+        let microtonal_chord = [c4, d4+25, e4-15];
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Musical Examples
+      description: |
+        Provide concrete musical examples that demonstrate the need for this feature.
+        This helps us understand the real-world applications.
+      placeholder: |
+        Examples of music that would benefit:
+        - Bartók's Mikrokosmos pieces with quarter tones
+        - Arabic maqam music with microtonal intervals
+        - Spectral music compositions
+
+        Current workarounds (if any):
+        - Currently, I have to...
+
+  - type: dropdown
+    id: feature-category
+    attributes:
+      label: Feature Category
+      description: What area of Carmen does this feature relate to?
+      options:
+        - "Language Syntax (new notation or constructs)"
+        - "Music Theory (new transformations, analysis)"
+        - "Export/Output (new formats, improved rendering)"
+        - "Performance/Optimization"
+        - "Developer Tools (debugging, analysis)"
+        - "REPL/Interactive Features"
+        - "Documentation/Examples"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Estimated Complexity
+      description: How complex do you think this feature might be to implement?
+      options:
+        - "Simple (small syntax addition, minor change)"
+        - "Medium (new language construct, significant change)"
+        - "Complex (major architectural change, new subsystem)"
+        - "I'm not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: |
+        Have you considered any alternative approaches to solving this problem?
+        Are there workarounds available in the current version?
+      placeholder: |
+        Alternative approaches:
+        - Could be solved by...
+        - Similar to how other languages handle...
+
+        Current workarounds:
+        - I can currently achieve something similar by...
+
+  - type: textarea
+    id: related-work
+    attributes:
+      label: Related Work
+      description: |
+        Are there similar features in other music programming languages or software?
+        Any relevant academic papers, music theory concepts, or standards?
+      placeholder: |
+        Similar features exist in:
+        - SuperCollider has...
+        - Lilypond supports...
+        - Music21 provides...
+
+        Relevant standards/concepts:
+        - MIDI specification for...
+        - Music theory concept of...
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - "Low - Nice to have, but not urgent"
+        - "Medium - Would significantly improve my workflow"
+        - "High - Blocking important use cases"
+        - "Critical - Required for my project"
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation-notes
+    attributes:
+      label: Implementation Notes
+      description: |
+        Any technical details, constraints, or implementation ideas you'd like to share?
+        This is optional but can be helpful for developers.
+      placeholder: |
+        Technical considerations:
+        - This might require changes to...
+        - Could leverage existing...
+        - Similar to how we handle...
+
+  - type: checkboxes
+    id: volunteer
+    attributes:
+      label: Contribution
+      description: Are you interested in helping fix this issue?
+      options:
+        - label: "I'd like to help solve this issue"
+        - label: "I can provide technical review for proposed changes"
+        - label: "I can test changes from a user perspective"
+        - label: "I'm just reporting the issue (no contribution planned)"
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following before submitting
+      options:
+        - label: "I have searched existing issues to ensure this feature hasn't been requested before"
+          required: true
+        - label: "I have provided clear musical use cases and examples"
+          required: true
+        - label: "I have considered the scope and complexity of this feature"
+          required: true
+        - label: "I understand this is a request, not a guarantee of implementation"
+          required: true

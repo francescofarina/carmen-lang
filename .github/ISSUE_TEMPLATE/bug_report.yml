@@ -1,0 +1,158 @@
+name: 🐛 Bug Report
+description: File a bug report to help us improve Carmen
+title: "bug: "
+labels: ["bug", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Please provide as much detail as possible to help diagnose and fix the issue.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Describe what happened and what you expected to happen instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Detailed steps to reproduce the behavior.
+      placeholder: |
+        1. Create a file with this Carmen code: ...
+        2. Run `carmen ...`
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: minimal-example
+    attributes:
+      label: Minimal Carmen Code Example
+      description: Please provide the smallest possible Carmen code that reproduces the issue.
+      render: rust
+      placeholder: |
+        // Your minimal Carmen code here
+        1/4 c4;
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+      placeholder: The program should...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened. Include full error messages and stack traces.
+      placeholder: |
+        Error: ...
+
+        Stack trace (if available):
+        ...
+    validations:
+      required: true
+
+  - type: input
+    id: carmen-version
+    attributes:
+      label: Carmen Version
+      description: What version of Carmen are you using?
+      placeholder: "0.1.0 (or commit hash if building from source)"
+    validations:
+      required: true
+
+  - type: input
+    id: rust-version
+    attributes:
+      label: Rust Version
+      description: Output of `rustc --version`
+      placeholder: "rustc 1.75.0 (82e1608df 2023-12-21)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: Operating System
+      description: What operating system are you using?
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - Other (please specify in additional context)
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: OS Version
+      description: Specific version of your operating system
+      placeholder: "Ubuntu 22.04, macOS 14.0, Windows 11, etc."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: installation-method
+    attributes:
+      label: Installation Method
+      description: How did you install Carmen?
+      options:
+        - "cargo install carmen-lang"
+        - "Built from source (main branch)"
+        - "Built from source (specific commit)"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: |
+        Add any other context about the problem here. This could include:
+        - Related Carmen files or dependencies
+        - Whether this worked in a previous version
+        - Any workarounds you've found
+        - Screenshots (if applicable)
+        - Output from `cargo --version` and `cargo build --verbose`
+      placeholder: Any additional information that might help us understand the issue...
+
+  - type: checkboxes
+    id: volunteer
+    attributes:
+      label: Contribution
+      description: Are you interested in helping fix this issue?
+      options:
+        - label: "I'd like to help solve this issue"
+        - label: "I can provide technical review for proposed changes"
+        - label: "I can test changes from a user perspective"
+        - label: "I'm just reporting the issue (no contribution planned)"
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following before submitting
+      options:
+        - label: "I have searched existing issues to ensure this bug hasn't been reported before"
+          required: true
+        - label: "I have provided a minimal example that reproduces the issue"
+          required: true
+        - label: "I have included all relevant version and system information"
+          required: true
+        - label: "I have checked that this isn't a feature request (use the feature request template instead)"
+          required: true
