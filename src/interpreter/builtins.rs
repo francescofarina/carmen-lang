@@ -151,40 +151,48 @@ impl BuiltinFunction for Invert {
             );
         }
 
-        let axis_pc = match <Value as ValueExtractor<PitchClass>>::extract(&values[1]) {
-            Some(pc) => pc,
-            None => {
-                return Err(ErrorSource::Argument(
-                    "Second argument must be a pitch class".to_string(),
-                )
-                .with_span(*span))
-            }
-        };
-
-        match &values[0] {
-            Value::Number(n) => {
-                if *n >= 0.0 && *n <= 11.0 && n.fract() == 0.0 {
-                    let pc = PitchClass::new(*n as u8);
-                    let inverted = pc.invert(&axis_pc);
-                    Ok(Value::Number(inverted.0 as f64))
-                } else {
-                    Err(ErrorSource::Type(
-                        "Number must be integer 0-11 for pitch class inversion".to_string(),
-                    )
-                    .with_span(*span))
+        // Try to extract axis as PitchClass first, then as Pitch
+        if let Some(axis_pc) = <Value as ValueExtractor<PitchClass>>::extract(&values[1]) {
+            // Chromatic inversion around pitch class axis
+            match &values[0] {
+                Value::Number(n) => {
+                    if *n >= 0.0 && *n <= 11.0 && n.fract() == 0.0 {
+                        let pc = PitchClass::new(*n as u8);
+                        let inverted = pc.invert(&axis_pc);
+                        Ok(Value::Number(inverted.0 as f64))
+                    } else {
+                        Err(ErrorSource::Type(
+                            "Number must be integer 0-11 for pitch class inversion".to_string(),
+                        )
+                        .with_span(*span))
+                    }
                 }
+                Value::PitchClass(pc) => Ok(Value::PitchClass(pc.invert(&axis_pc))),
+                Value::PitchClassSet(pcs) => Ok(Value::PitchClassSet(pcs.invert(&axis_pc))),
+                Value::Pitch(p) => {
+                    let inverted_pc = p.pitch_class.invert(&axis_pc);
+                    let inverted_pitch = Pitch {
+                        pitch_class: inverted_pc,
+                        octave: p.octave,
+                    };
+                    Ok(Value::Pitch(inverted_pitch))
+                }
+                _ => Err(ErrorSource::Type("Cannot invert this type".to_string()).with_span(*span)),
             }
-            Value::PitchClass(pc) => Ok(Value::PitchClass(pc.invert(&axis_pc))),
-            Value::PitchClassSet(pcs) => Ok(Value::PitchClassSet(pcs.invert(&axis_pc))),
-            Value::Pitch(p) => {
-                let inverted_pc = p.pitch_class.invert(&axis_pc);
-                let inverted_pitch = Pitch {
-                    pitch_class: inverted_pc,
-                    octave: p.octave,
-                };
-                Ok(Value::Pitch(inverted_pitch))
+        } else if let Some(axis_pitch) = <Value as ValueExtractor<Pitch>>::extract(&values[1]) {
+            // Pitch inversion around specific pitch axis
+            match &values[0] {
+                Value::Pitch(p) => Ok(Value::Pitch(p.invert(&axis_pitch))),
+                _ => Err(ErrorSource::Type(
+                    "When using a pitch as axis, can only invert pitches".to_string(),
+                )
+                .with_span(*span)),
             }
-            _ => Err(ErrorSource::Type("Cannot invert this type".to_string()).with_span(*span)),
+        } else {
+            Err(
+                ErrorSource::Argument("Second argument must be a pitch class or pitch".to_string())
+                    .with_span(*span),
+            )
         }
     }
 }
