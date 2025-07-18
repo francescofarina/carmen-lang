@@ -1,5 +1,5 @@
 use carmen_lang::common::fraction::Fraction;
-use carmen_lang::core::traits::{Interval, Invert, Transpose};
+use carmen_lang::core::traits::{Interval, Transpose};
 use carmen_lang::core::{
     Attribute, Chord, Clef, ContextChange, Duration, Dynamic, EventContent, KeySignature,
     MetadataKey, MetadataValue, Movement, MusicalEvent, Part, Pitch, PitchClass, PitchClassSet,
@@ -7,6 +7,8 @@ use carmen_lang::core::{
 };
 use std::collections::HashSet;
 use std::str::FromStr;
+
+mod invert_tests;
 
 #[cfg(test)]
 mod pitch_class_tests {
@@ -117,23 +119,6 @@ mod pitch_class_tests {
         let f_sharp = PitchClass::new(6);
         assert_eq!(f_sharp.transpose(6), c);
         assert_eq!(f_sharp.transpose(-6), c);
-    }
-
-    #[test]
-    fn test_invert() {
-        let c = PitchClass::new(0);
-        let d = PitchClass::new(2);
-        let e = PitchClass::new(4);
-
-        // Invert around C (axis = 0)
-        assert_eq!(c.invert(&c), c);
-        assert_eq!(d.invert(&c), PitchClass::new(10)); // D inverts to Bb
-        assert_eq!(e.invert(&c), PitchClass::new(8)); // E inverts to Ab
-
-        // Invert around different axis
-        let f_sharp = PitchClass::new(6);
-        assert_eq!(c.invert(&f_sharp), f_sharp);
-        assert_eq!(d.invert(&f_sharp), PitchClass::new(4));
     }
 }
 
@@ -382,17 +367,6 @@ mod pitch_class_set_tests {
         let expected_bb: HashSet<PitchClass> =
             vec![10, 2, 5].into_iter().map(PitchClass::new).collect();
         assert_eq!(bb_major.classes, expected_bb);
-    }
-
-    #[test]
-    fn test_invert_pitch_class_set() {
-        let c_major = PitchClassSet::from_u8_values(vec![0, 4, 7]);
-        let inverted = c_major.invert(&PitchClass::new(0));
-
-        // Inversion of C major around C should give C, Ab, F (0, 8, 5)
-        let expected: HashSet<PitchClass> =
-            vec![0, 8, 5].into_iter().map(PitchClass::new).collect();
-        assert_eq!(inverted.classes, expected);
     }
 
     #[test]

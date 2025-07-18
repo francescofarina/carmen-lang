@@ -38,6 +38,43 @@ mod builtin_function_tests {
     }
 
     #[test]
+    fn test_invert_with_pitch_axis() {
+        let result = interpret_code("invert(e4, c4);").unwrap();
+        let expected_pitch = Pitch {
+            pitch_class: PitchClass::new(8), // Ab
+            octave: 3,
+        };
+        assert_eq!(result, Value::Pitch(expected_pitch));
+    }
+
+    #[test]
+    fn test_invert_pitch_class_set() {
+        let result = interpret_code("invert({0, 4, 7}, 0);").unwrap();
+        let expected_pcs = PitchClassSet::from_u8_values(vec![0, 8, 5]); // C, Ab, F
+        assert_eq!(result, Value::PitchClassSet(expected_pcs));
+    }
+
+    #[test]
+    fn test_invert_invalid_axis_type() {
+        let result = interpret_code("invert(c4, \"invalid\");");
+        assert!(result.is_err());
+        assert!(result
+            .unwrap_err()
+            .to_string()
+            .contains("Second argument must be a pitch class or pitch"));
+    }
+
+    #[test]
+    fn test_invert_invalid_target_for_pitch_axis() {
+        let result = interpret_code("invert({0, 4, 7}, c4);");
+        assert!(result.is_err());
+        assert!(result
+            .unwrap_err()
+            .to_string()
+            .contains("When using a pitch as axis, can only invert pitches"));
+    }
+
+    #[test]
     fn test_pitch_interval() {
         let result = interpret_code("pitch_interval(C4, G4);").unwrap();
         assert_eq!(result, Value::Number(7.0));

@@ -28,25 +28,31 @@ pub trait Transpose {
     fn transpose(&self, semitones: i32) -> Self;
 }
 
-/// Trait for musical objects that can be inverted around a pitch class axis.
+/// Trait for musical objects that can be inverted around an axis.
 ///
 /// Musical inversion reflects pitches around a central axis, creating
 /// a mirror image of the original musical material. This is a key operation
 /// in twelve-tone and atonal music analysis, where inversions are used
 /// to generate related musical material.
 ///
+/// The trait is generic over the axis type to support different kinds of
+/// musical inversion:
+/// - Inversion around a `PitchClass`: Chromatic inversion ignoring octave information
+/// - Inversion around a `Pitch`: Inversion preserving octave relationships
+///
 /// # Examples
-/// - Inverting a C major triad (C-E-G) around C yields C-Ab-F
+/// - Inverting a C major triad (C-E-G) around C pitch class yields C-Ab-F
+/// - Inverting around a specific pitch preserves octave structure
 /// - Inversion is often combined with transposition in serial music
-pub trait Invert {
-    /// Inverts the musical object around the specified pitch class axis.
+pub trait Invert<Axis = PitchClass> {
+    /// Inverts the musical object around the specified axis.
     ///
     /// # Arguments
-    /// * `axis` - The pitch class to use as the center of inversion
+    /// * `axis` - The axis to use as the center of inversion
     ///
     /// # Returns
     /// A new instance of the same type, inverted around the given axis
-    fn invert(&self, axis: &PitchClass) -> Self;
+    fn invert(&self, axis: &Axis) -> Self;
 }
 
 /// Trait for calculating intervals between musical objects.

@@ -82,7 +82,7 @@ impl Transpose for PitchClass {
     }
 }
 
-impl Invert for PitchClass {
+impl Invert<PitchClass> for PitchClass {
     fn invert(&self, axis: &PitchClass) -> Self {
         let inverted = ((axis.0 as i32 - self.0 as i32) % 12 + 12) % 12;
         Self(inverted as u8)
@@ -148,6 +148,25 @@ impl Transpose for Pitch {
     fn transpose(&self, semitones: i32) -> Self {
         let new_midi = (self.to_midi() as i32 + semitones).clamp(0, 127) as u8;
         Self::from_midi(new_midi)
+    }
+}
+
+impl Invert<PitchClass> for Pitch {
+    fn invert(&self, axis: &PitchClass) -> Self {
+        let inverted_pc = self.pitch_class.invert(axis);
+        Self {
+            pitch_class: inverted_pc,
+            octave: self.octave,
+        }
+    }
+}
+
+impl Invert<Pitch> for Pitch {
+    fn invert(&self, axis: &Pitch) -> Self {
+        let axis_midi = axis.to_midi() as i32;
+        let self_midi = self.to_midi() as i32;
+        let inverted_midi = (2 * axis_midi - self_midi).clamp(0, 127) as u8;
+        Self::from_midi(inverted_midi)
     }
 }
 
@@ -339,7 +358,7 @@ impl Transpose for PitchClassSet {
     }
 }
 
-impl Invert for PitchClassSet {
+impl Invert<PitchClass> for PitchClassSet {
     fn invert(&self, axis: &PitchClass) -> Self {
         let classes = self.classes.iter().map(|pc| pc.invert(axis)).collect();
         Self { classes }
@@ -550,6 +569,20 @@ impl Transpose for Chord {
     }
 }
 
+impl Invert<PitchClass> for Chord {
+    fn invert(&self, axis: &PitchClass) -> Self {
+        let pitches = self.pitches.iter().map(|p| p.invert(axis)).collect();
+        Self { pitches }
+    }
+}
+
+impl Invert<Pitch> for Chord {
+    fn invert(&self, axis: &Pitch) -> Self {
+        let pitches = self.pitches.iter().map(|p| p.invert(axis)).collect();
+        Self { pitches }
+    }
+}
+
 /// The musical content of an event - what is actually played or heard.
 #[derive(Debug, Clone, PartialEq)]
 pub enum EventContent {
@@ -663,6 +696,48 @@ impl Transpose for MusicalEvent {
             EventContent::Rest => EventContent::Rest,
             EventContent::Sequence(events) => {
                 EventContent::Sequence(events.iter().map(|e| e.transpose(semitones)).collect())
+            }
+        };
+
+        Self {
+            content,
+            duration: self.duration,
+            dynamic: self.dynamic,
+            attributes: self.attributes.clone(),
+            offset: self.offset,
+        }
+    }
+}
+
+impl Invert<PitchClass> for MusicalEvent {
+    fn invert(&self, axis: &PitchClass) -> Self {
+        let content = match &self.content {
+            EventContent::Note(pitch) => EventContent::Note(pitch.invert(axis)),
+            EventContent::Chord(chord) => EventContent::Chord(chord.invert(axis)),
+            EventContent::Rest => EventContent::Rest,
+            EventContent::Sequence(events) => {
+                EventContent::Sequence(events.iter().map(|e| e.invert(axis)).collect())
+            }
+        };
+
+        Self {
+            content,
+            duration: self.duration,
+            dynamic: self.dynamic,
+            attributes: self.attributes.clone(),
+            offset: self.offset,
+        }
+    }
+}
+
+impl Invert<Pitch> for MusicalEvent {
+    fn invert(&self, axis: &Pitch) -> Self {
+        let content = match &self.content {
+            EventContent::Note(pitch) => EventContent::Note(pitch.invert(axis)),
+            EventContent::Chord(chord) => EventContent::Chord(chord.invert(axis)),
+            EventContent::Rest => EventContent::Rest,
+            EventContent::Sequence(events) => {
+                EventContent::Sequence(events.iter().map(|e| e.invert(axis)).collect())
             }
         };
 

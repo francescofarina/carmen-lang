@@ -519,17 +519,25 @@ theme |> transpose(2); // Transposes the sequence up a whole step to [q d4; e e4
 
 for single pitches and pitch classes the operators `+` or `-` can be used as a shorthand for transposing by a given interval in semitones.
 
-- `invert` or `I`: inverts a pitch, pitch class, pitch class set, or sequence by a given interval in semitones. Let $I_n$ be the inversion operator by $n$ semitones, then if $y = I_n(x)$ it means that $x+y = n$.
+- `invert` or `I`: inverts a pitch, pitch class, pitch class set, or sequence around a given axis. The axis can be either a pitch class (for chromatic inversion) or a specific pitch (for octave-preserving inversion).
 
-```carmen
-0 |> invert(4); // Returns 4
-4 |> invert(9); // Returns 5
-{0, 4, 7} |> invert(7); // Returns {7, 3, 0}
-```
+  - Chromatic Inversion (around pitch class): Let $I_n$ be the inversion operator around pitch class $n$, then if $y = I_n(x)$ it means that $n - x = y \bmod 12$.
 
-For single pitches the inversion performs the operation on its pitch class and returns the pitch with the same octave as the original pitch. For example, `invert(c4, 4)` returns `e4`.
+  ```carmen
+  0 |> invert(4); // Returns 4
+  4 |> invert(9); // Returns 5
+  {0, 4, 7} |> invert(7); // Returns {7, 3, 0}
+  ```
 
-For sequences, the inversion is applied to each pitch in the sequence, meaning that each pitch is mapped to its inversion within the same octave as the original pitch.
+  - Pitch Inversion (around specific pitch): Inverts pitches around a specific pitch, preserving octave relationships.
+
+  ```carmen
+  c4 |> invert(c3); // C4 around C3 returns C2
+  e4 |> invert(c4); // E4 around C4 returns Ab3
+  {c4, e4, g4} |> invert(c4); // C major triad around C4 returns {c4, ab3, f3}
+  ```
+
+For single pitches, chromatic inversion operates on the pitch class and preserves the original octave, while pitch inversion operates on the full MIDI value. For sequences, the inversion is applied to each musical event recursively.
 
 
 ### Other constructs
