@@ -6,7 +6,7 @@
 
 [![Crates.io](https://img.shields.io/crates/v/carmen-lang.svg)](https://crates.io/crates/carmen-lang)
 [![Documentation](https://docs.rs/carmen-lang/badge.svg)](https://docs.rs/carmen-lang)
-[![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](https://github.com/francescofarina/carmen#license)
+[![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](https://github.com/francescofarina/carmen-lang#license)
 
 ## Table of Contents
 
@@ -58,7 +58,7 @@ You will need to have the [Rust programming language](https://www.rust-lang.org/
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/francescofarina/carmen.git
+    git clone https://github.com/francescofarina/carmen-lang.git
     cd carmen
     ```
 2.  **Build the project:**
@@ -255,7 +255,7 @@ If you want to contribute to Carmen or work on the project for development purpo
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/francescofarina/carmen.git
+    git clone https://github.com/francescofarina/carmen-lang.git
     cd carmen
     ```
 2.  **Build in debug mode:**
@@ -275,7 +275,7 @@ We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.
 
 ## Community
 
-- **Issues & Bug Reports**: [GitHub Issues](https://github.com/francescofarina/carmen/issues)
+- **Issues & Bug Reports**: [GitHub Issues](https://github.com/francescofarina/carmen-lang/issues)
 - **Documentation**: [Language Manual](docs/language_manual.md)
 - **Crate Documentation**: [docs.rs/carmen-lang](https://docs.rs/carmen-lang)
 

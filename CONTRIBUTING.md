@@ -38,7 +38,7 @@ This project and everyone participating in it is governed by our [Code of Conduc
    ```
 3. **Add the upstream remote**:
    ```bash
-   git remote add upstream https://github.com/francescofarina/carmen.git
+   git remote add upstream https://github.com/francescofarina/carmen-lang.git
    ```
 4. **Build the project**:
    ```bash
