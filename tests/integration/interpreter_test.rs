@@ -31,3 +31,31 @@ score "Voices" {
         _ => panic!("Expected a score"),
     }
 }
+
+#[test]
+fn test_part_concatenation() {
+    let source = r#"
+let part1 = part "Violin" {
+    1/4 c4;
+    1/4 d4;
+};
+
+let part2 = part "Violin" {
+    1/4 e4;
+    1/4 f4;
+};
+
+part1 + part2;
+"#;
+
+    let result = run(source).unwrap();
+    match result {
+        Value::Part(part) => {
+            assert_eq!(part.events.len(), 4);
+            // Check offsets to ensure they are sequential
+            let offsets: Vec<_> = part.events.iter().map(|e| e.offset.to_f64()).collect();
+            assert_eq!(offsets, vec![0.0, 0.25, 0.5, 0.75]);
+        }
+        _ => panic!("Expected a Part value, got {:?}", result),
+    }
+}
