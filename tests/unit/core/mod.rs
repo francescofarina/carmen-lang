@@ -1105,6 +1105,27 @@ mod part_tests {
         // = 1.0 + 0.75 = 1.75
         assert_eq!(part.total_duration(), Fraction::new(7, 4));
     }
+
+    #[test]
+    fn test_part_merge() {
+        let mut part1 = Part::new(Some("Part 1".to_string()));
+        part1.add_event(MusicalEvent::note(
+            Pitch::from_note_name("c", 0, 4).unwrap(),
+            Duration::from_fraction(1, 4),
+        ));
+
+        let mut part2 = Part::new(Some("Part 2".to_string()));
+        part2.add_event(MusicalEvent::note(
+            Pitch::from_note_name("d", 0, 4).unwrap(),
+            Duration::from_fraction(1, 4),
+        ));
+
+        let merged_part = part1.merge(&part2);
+
+        assert_eq!(merged_part.events.len(), 2);
+        assert_eq!(merged_part.events[0].offset, Fraction::new(0, 1));
+        assert_eq!(merged_part.events[1].offset, Fraction::new(1, 4));
+    }
 }
 
 #[cfg(test)]

@@ -1838,6 +1838,10 @@ impl Interpreter {
             }
 
             // Pitch class set transposition
+            // Part concatenation
+            (Value::Part(a), BinaryOp::Add, Value::Part(b)) => Ok(Value::Part(a.merge(b))),
+
+            // Pitch class set transposition
             (Value::PitchClassSet(pcs), BinaryOp::Add, Value::Number(n)) => {
                 Ok(Value::PitchClassSet(pcs.transpose(*n as i32)))
             }

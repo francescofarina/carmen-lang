@@ -1097,6 +1097,83 @@ impl Part {
 
         self.offset + main_duration.max(staff_duration)
     }
+
+    /// Merges another part into this one, appending its content.
+    ///
+    /// The events, staves, and context changes from the `other` part are appended
+    /// to this one, with their timing adjusted to occur after this part's content
+    /// has finished.
+    ///
+    /// # Arguments
+    ///
+    /// * `other` - The part to merge into this one.
+    ///
+    /// # Returns
+    ///
+    /// A new `Part` containing the merged musical content.
+    pub fn merge(&self, other: &Part) -> Part {
+        let mut new_part = self.clone();
+        let base_offset = self.total_duration();
+
+        // Merge top-level events from the other part, adjusting their offsets.
+        new_part.events.extend(other.events.iter().map(|e| {
+            let mut new_event = e.clone();
+            new_event.offset = e.offset + base_offset;
+            new_event
+        }));
+
+        // Merge context changes, adjusting their time offsets.
+        new_part
+            .context_changes
+            .extend(other.context_changes.iter().map(|c| ContextChange {
+                time_offset: c.time_offset + base_offset,
+                ..c.clone()
+            }));
+
+        // Merge staves from the other part.
+        for other_staff in &other.staves {
+            if let Some(self_staff) = new_part
+                .staves
+                .iter_mut()
+                .find(|s| s.number == other_staff.number)
+            {
+                // If a staff with the same number exists, merge the voices.
+                let staff_offset = self_staff.total_duration();
+                for (i, other_voice) in other_staff.voices.iter().enumerate() {
+                    let new_events: Vec<MusicalEvent> = other_voice
+                        .events
+                        .iter()
+                        .map(|e| {
+                            let mut new_event = e.clone();
+                            new_event.offset = e.offset + staff_offset;
+                            new_event
+                        })
+                        .collect();
+
+                    if i < self_staff.voices.len() {
+                        // Append events to the corresponding existing voice.
+                        self_staff.voices[i].events.extend(new_events);
+                    } else {
+                        // If the other staff has more voices, add them as new voices.
+                        let mut new_voice = Voice::new();
+                        new_voice.events = new_events;
+                        self_staff.voices.push(new_voice);
+                    }
+                }
+            } else {
+                // If the staff does not exist in the current part, add it as a new staff.
+                let mut new_staff = other_staff.clone();
+                for voice in &mut new_staff.voices {
+                    for event in &mut voice.events {
+                        event.offset += base_offset;
+                    }
+                }
+                new_part.staves.push(new_staff);
+            }
+        }
+
+        new_part
+    }
 }
 
 /// A collection of musical parts that play simultaneously.
